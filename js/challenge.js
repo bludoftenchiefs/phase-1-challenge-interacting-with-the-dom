@@ -20,12 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const heart = document.getElementById('heart');
 
-    heart.addEventListener('click', function(like){
-    
+    heart.addEventListener('click', function(){
+        var btn = document.createElement("li");
+        btn.innerHTML = "<span>" +(counter.innerHTML)+"</span> has been liked times";
+        document.body.appendChild(btn);
     })
-
-
 })
+// var ul = document.getElementById("likes");
+// var li = document.createElement("li");
+// li.appendChild(document.counter.innerText);
+// ul.appendChild(li)
 
 //              heart.addEventListener("click",function(){
 //                     var a=document.getElementById("counter"),
