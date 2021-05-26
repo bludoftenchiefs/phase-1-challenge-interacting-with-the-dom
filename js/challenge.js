@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const counter = document.getElementById('counter'); 
 
-    setInterval(function(){
+    let interval = setInterval(function(){
          counter.innerText++}, 1000);
     
     const minus = document.getElementById('minus');
@@ -19,35 +19,50 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     const heart = document.getElementById('heart');
+    let likeTotal = 0;
+    let myCounter = counter.innerHTML;
 
+    function likeCounter(counterValue){
+        if (counterValue === myCounter){
+            likeTotal += 1;
+            myCounter = counterValue;
+            return likeTotal;
+        } 
+        else {
+            likeTotal = 0;
+            likeTotal += 1;
+            myCounter = counterValue;
+            return likeTotal;
+        }
+    }
     heart.addEventListener('click', function(){
-        var btn = document.createElement("li");
-        btn.innerHTML = "<span>" +(counter.innerHTML)+"</span> has been liked times";
+        let btn = document.createElement("li");
+        btn.innerHTML = "<span>" +(counter.innerHTML)+`</span> has been liked ${likeCounter(counter.innerHTML)} times`;
         document.body.appendChild(btn);
     })
-})
-// var ul = document.getElementById("likes");
-// var li = document.createElement("li");
-// li.appendChild(document.counter.innerText);
-// ul.appendChild(li)
 
-//              heart.addEventListener("click",function(){
-//                     var a=document.getElementById("counter"),
-//                     b=parseInt(a.innerText),c=document.querySelector(".likes"),
-//                     d=void 0;if([].concat(_toConsumableArray(c.children)).map(function(a){
-//                         return parseInt(a.dataset.num)}).includes(b))
-//                         {d=document.querySelector('[data-num="'+b+'"]');
-//                         var e=parseInt(d.children[0].innerText);
-//                         d.innerHTML=b+" has been liked <span>"+(e+1)+"</span> times"}
-//                         else(d=document.createElement("li")).setAttribute("data-num",b),
-//                         d.innerHTML=b+" has been liked <span>1</span> time",
-//                         c.appendChild(d)}),
-//             pause.addEventListener("click",function(){
-//                          playing?(playing=!1,clearInterval(interval),this.innerText="resume"):(playing=!0,interval=timer(),
-//                           this.innerText="pause"),
-//                           [].concat(_toConsumableArray(document.getElementsByTagName("button"))).forEach(function(a)
-//                             {"pause"!==a.id&&(a.disabled=!playing)})}),
-//             commentForm.addEventListener("submit",function(a)
-//                             {a.preventDefault();
-//                                 var b=this.children[0],c=b.value;b.value="";
-//                                 var d=document.querySelector(".comments"),e=document.createElement("p");e.innerText=c,d.appendChild(e)});
+    const pause = document.getElementById('pause');
+    let paused = false;
+
+    pause.addEventListener('click', function() {
+        if (paused) {
+            interval = setInterval(function(){
+                counter.innerText++}, 1000);
+            pause.innerText = 'pause';
+            paused = !paused;
+        } else {
+            clearInterval(interval);
+            pause.innerText = 'resume';
+            paused = !paused;
+            }
+        });
+    const submit = document.getElementById('submit');
+    const commentInput = document.getElementById('comment-input');
+    
+    submit.addEventListener('click', function() {
+       let btn = document.createElement('li');
+       btn.innerHTML = commentInput.value;
+       document.body.appendChild(btn);
+       commentInput.value = '';
+        })
+    })
